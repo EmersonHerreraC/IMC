@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Encontrar Áreas</title>
+</head>
+
+<body>
+    <form id="rectangulo">
+        <div class="card">
+            <center>
+                <h2>Calcular IMC</h2>
+            </center>
+            <div class="input-group">
+                <center><img src="img/8551499.jpg" alt="" id="imagen-imc"></center>
+            </div>
+            <div class="input-group">
+                <label for="nombre">Nombre:</label>
+                <input type="text" id="nombre" name="nombre" required>
+            </div>
+            <div class="input-group">
+                <label for="talla">Talla:(Ingrese en centimetros)</label>
+                <input type="number" id="talla" name="talla" required>
+            </div>
+            <div class="input-group">
+                <label for="peso">Peso:</label>
+                <input type="number" id="peso" name="peso" required>
+            </div>
+            <div class="output-group">
+                <label for="resultado" id="categoria-imc">TU IMC ES:</label>
+                <output id="resultado">...</output>
+            </div>
+            <div class="output-group">
+                <label for="titulo" id="">DESCRIPCION:</label>
+                <output id="titulo">...</output>
+            </div>
+
+            <button type="submit">Calcular Masa Corporal</button>
+            <button class="limpiar" type="reset" id="limpiar">Limpiar</button>
+        </div>
+    </form>
+
+    <script>
+        const imcForm = document.getElementById('rectangulo');
+        imcForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const nombre = document.getElementById('nombre').value;
+            const talla = Number(document.getElementById('talla').value) / 100; // Convertir a metros
+            const peso = Number(document.getElementById('peso').value);
+            const imc = peso / (talla * talla);
+
+            const imcResultado = document.getElementById('resultado');
+            imcResultado.textContent = `Tu IMC es ${imc.toFixed(2)}.`;
+
+            const imcCategoria = document.getElementById('categoria-imc');
+            const imcDescripcion = document.getElementById('titulo');
+            if (imc < 18.5) {
+                imcCategoria.textContent = 'Peso Bajo';
+                document.getElementById('imagen-imc').src = 'img/delgado.png';
+                document.getElementById('imagen-imc').alt = 'Peso Bajo';
+                imcDescripcion.textContent = nombre + ' Estás flaco, come un poco más o No te dan de comer';
+            } else if (imc < 25) {
+                imcCategoria.textContent = 'Peso Normal';
+                document.getElementById('imagen-imc').src = 'img/normal.png';
+                document.getElementById('imagen-imc').alt = 'Peso Normal';
+                imcDescripcion.textContent = nombre + ' Tienes un peso saludable, ¡sigue así!';
+            } else if (imc < 30) {
+                imcCategoria.textContent = 'Sobrepeso';
+                document.getElementById('imagen-imc').src = 'img/sobrepeso.png';
+                document.getElementById('imagen-imc').alt = 'Sobrepeso';
+                imcDescripcion.textContent = ' Tienes sobrepeso, intenta hacer más ejercicio y comer de forma más saludable.';
+            } else {
+                imcCategoria.textContent = 'Obesidad';
+                document.getElementById('imagen-imc').src = 'img/obeso.jpg';
+                document.getElementById('imagen-imc').alt = 'Obesidad';
+                imcDescripcion.textContent = nombre + ' Tienes obesidad, seguro comes mucha grasa, Cuidate más Panzón.';
+            }
+        });
+
+
+        const limpiarCampos = document.getElementById('limpiar');
+        limpiarCampos.addEventListener('click', function(event) {
+            event.preventDefault();
+
+            const N = document.getElementById('nombre');
+            const T = document.getElementById('talla');
+            const P = document.getElementById('peso');
+            const R = document.getElementById('resultado');
+            const TIT = document.getElementById('titulo');
+            N.value = '';
+            T.value = '';
+            P.value = '';
+            R.value = '...';
+            TIT.value = '...';
+            document.getElementById('imagen-imc').src = 'img/8551499.jpg';
+        });
+    </script>
+
+</body>
+
+</html>
